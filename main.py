@@ -28,12 +28,13 @@ async def read_item(request: Request):
         },
     )
 
-
-@app.get("/video/share/url/parse")
+@app.post("/get_video_url")
 @limiter.limit("2/minute")  # 限制每分钟最多访问 2 次
-async def share_url_parse(request: Request,url: str):
+async def share_url_parse(request: Request):
     url_reg = re.compile(r"http[s]?:\/\/[\w.-]+[\w\/-]*[\w.-]*\??[\w=&:\-\+\%]*[/]*")
-    video_share_url = url_reg.search(url).group()
+    form_data = await request.form()
+    shared_url = form_data.get('shared_url')
+    video_share_url = url_reg.search(shared_url).group()
     try:
         video_info = await parse_video_share_url(video_share_url)
         print(video_info.__dict__)
@@ -59,4 +60,4 @@ async def video_id_parse(request: Request,source: VideoSource, video_id: str):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=5000)
