@@ -128,7 +128,12 @@ function  setValue(){
         }
 
         $(".down").html(successHtml);
-    }else{
+    }else if(jsonObj.code == 429){
+        mdui.snackbar({
+            message: "解析失败,解析频率为1分钟2次！"
+        });
+    }
+    else{
         mdui.snackbar({
             message: "解析失败,视频不存在或者链接不正确:<br/>" + jsonObj.msg
         });
