@@ -41,6 +41,7 @@ class RedBook(BaseParser):
         )
         if len(h264_data) > 0:
             video_url = h264_data[0].get("masterUrl", "")
+            video_url = video_url.replace("http","https")
 
         # 获取图集图片地址
         image_list = []
