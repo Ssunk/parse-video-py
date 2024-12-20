@@ -46,7 +46,10 @@ class RedBook(BaseParser):
         image_list = []
         if len(video_url) <= 0:
             for img_item in data["imageList"]:
-                image_list.append(img_item["urlDefault"])
+                img_link = img_item["urlDefault"]
+                img_link = img_link.split("/")[-1].split("!")[0]
+                full_link = f"https://ci.xiaohongshu.com/{img_link}?imageView2/2/w/1080/format/jpg"
+                image_list.append(full_link)
 
         video_info = VideoInfo(
             video_url=video_url,
